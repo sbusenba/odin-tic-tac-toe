@@ -8,12 +8,12 @@ function Board(boardDiv){
 
     this.checkWins = function(){
         let threes = []
-        threes[0]= board[0][0] + board[0][1] + board[0][2]
-        threes[1]= board[1][0] + board[1][1] + board[1][2]
-        threes[2]= board[2][0] + board[2][1] + board[2][2]
-        threes[3]= board[0][0] + board[1][0] + board[2][0]
-        threes[4]= board[0][1] + board[2][1] + board[0][2]
-        threes[5]= board[0][2] + board[0][2] + board[0][2]
+        threes[0]= board[0][0] + board[1][0] + board[2][0]
+        threes[1]= board[0][1] + board[1][1] + board[2][1]
+        threes[2]= board[0][2] + board[1][2] + board[2][2]
+        threes[3]= board[0][0] + board[0][1] + board[0][2]
+        threes[4]= board[1][0] + board[1][1] + board[1][2]
+        threes[5]= board[2][0] + board[2][1] + board[2][2]
         threes[6]= board[0][0] + board[1][1] + board[2][2]
         threes[7]= board[2][0] + board[1][1] + board[0][2]
         let winner = ''
@@ -66,6 +66,7 @@ console.log(`${this.getAttribute('data-row')} ,${this.getAttribute('data-column'
 }
 function switchPlayer(){
  currentPlayer = (currentPlayer=== playerOne)? playerTwo:playerOne
+ toastDiv.innerText = currentPlayer.name
 }
 const playerOne ={
     name: "player1",
@@ -76,8 +77,8 @@ const playerTwo = {
     marker: "o"
 }
 let currentPlayer = playerOne
-
-
+toastDiv = document.querySelector('.toastDiv')
+toastDiv.innerText = currentPlayer.name
 myBoardDiv = document.querySelector('.boardDiv') 
 let myBoard = new Board(myBoardDiv)
 myBoard.drawBoard(myBoardDiv)

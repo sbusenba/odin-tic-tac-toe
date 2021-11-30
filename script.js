@@ -1,11 +1,21 @@
 function Board(boardDiv){
-    const board = []
+    let board = []
+    let winner = ''
     board.push(['_','_','_'])
     board.push(['_','_','_'])
     board.push(['_','_','_'])
 
-    console.table(board)
-
+    this.resetBoard = function(){
+        console.log('Resetting Board')
+        board = []
+        winner = ''
+        board.push(['_','_','_'])
+        board.push(['_','_','_'])
+        board.push(['_','_','_'])
+        myBoard.drawBoard(boardDiv)
+        currentPlayer = playerOne
+        toastDiv.innerText = currentPlayer.name
+    }
     this.checkWins = function(){
         let threes = []
         threes[0]= board[0][0] + board[1][0] + board[2][0]
@@ -16,9 +26,8 @@ function Board(boardDiv){
         threes[5]= board[2][0] + board[2][1] + board[2][2]
         threes[6]= board[0][0] + board[1][1] + board[2][2]
         threes[7]= board[2][0] + board[1][1] + board[0][2]
-        let winner = ''
+        
         threes.forEach(function (three) {
-            console.log(three)
             if (three === 'xxx')
                 winner = 'x'
             if (three === 'ooo')
@@ -39,21 +48,36 @@ function Board(boardDiv){
                 cell.addEventListener('click',cellClicked)
                 cell.innerText = board[rowNum][columnNum]
                 row.appendChild(cell)
-    
             }
             boardDiv.appendChild(row)
         }
     }
     this.setCell = function(row,column,currentPlayer){
-        if (board[row][column] == '_'){
-            board[row][column] = currentPlayer.marker
-            switchPlayer()
+        if (winner ==''){
+            if (board[row][column] == '_'){
+                board[row][column] = currentPlayer.marker
+                switchPlayer()
+            }
+            switch (myBoard.checkWins()){
+                case 'x':
+                    toastDiv.innerText = "X WINS! (click this to reset)"
+                    toastDiv.addEventListener('click',this.resetBoard)
+                    break;
+                case 'o':
+                    toastDiv.innerText = "O WINS! (click this to reset)"
+                    toastDiv.addEventListener('click',this.resetBoard)
+                    break;
+            } 
+        }else {
+                myBoard.resetBoard
+                myBoard.drawBoard
+                currentPlayer = playerOne
+                toastDiv.innerText = currentPlayer.name
+            }
+            
         }
-        console.table(board)
-        console.log(myBoard.checkWins())
-        
-    }
 }
+
 function cellClicked (){
 console.log(`${this.getAttribute('data-row')} ,${this.getAttribute('data-column')}`)
     myBoard.setCell(this.getAttribute('data-row'),
@@ -69,17 +93,17 @@ function switchPlayer(){
  toastDiv.innerText = currentPlayer.name
 }
 const playerOne ={
-    name: "player1",
+    name: "player X",
     marker: 'x'
 }
 const playerTwo = {
-    name: "player2",
+    name: "player O",
     marker: "o"
 }
+
 let currentPlayer = playerOne
 toastDiv = document.querySelector('.toastDiv')
 toastDiv.innerText = currentPlayer.name
 myBoardDiv = document.querySelector('.boardDiv') 
 let myBoard = new Board(myBoardDiv)
 myBoard.drawBoard(myBoardDiv)
-console.log(myBoard.checkWins())

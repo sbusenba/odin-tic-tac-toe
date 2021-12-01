@@ -16,8 +16,7 @@ function Board(boardDiv){
         board.push(['_','_','_'])
         myBoard.drawBoard(boardDiv)
         currentPlayer = playerOne
-        toastDiv.innerText = currentPlayer.name
-        toastDiv.removeEventListener('click',myBoard.resetBoard)
+        toastDiv.innerText = `${currentPlayer.name}'s turn!`
     }
     this.checkWins = function(){
         let threes = []
@@ -73,12 +72,12 @@ function Board(boardDiv){
                 switchPlayer()
             }
             switch (myBoard.checkWins()){
-                case 'x':
-                    toastDiv.innerText = "X WINS! (click this to reset)"
+                case playerOne.marker:
+                    toastDiv.innerText = `${playerOne.name} WINS!`
                     toastDiv.addEventListener('click',myBoard.resetBoard)
                     break;
-                case 'o':
-                    toastDiv.innerText = "O WINS! (click this to reset)"
+                case playerTwo.marker:
+                    toastDiv.innerText = `${playerTwo.name} WINS!`
                     toastDiv.addEventListener('click',myBoard.resetBoard)
                     break;
                 case 'nobody':
@@ -90,7 +89,7 @@ function Board(boardDiv){
                 myBoard.resetBoard
                 myBoard.drawBoard
                 currentPlayer = playerOne
-                toastDiv.innerText = currentPlayer.name
+                toastDiv.innerText = `${currentPlayer.name}'s turn!`
             }
             
         }
@@ -108,7 +107,7 @@ console.log(`${this.getAttribute('data-row')} ,${this.getAttribute('data-column'
 }
 function switchPlayer(){
  currentPlayer = (currentPlayer=== playerOne)? playerTwo:playerOne
- toastDiv.innerText = currentPlayer.name
+ toastDiv.innerText = `${currentPlayer.name}'s turn!`
 }
 const playerOne ={
     name: "player X",
@@ -120,8 +119,10 @@ const playerTwo = {
 }
 
 let currentPlayer = playerOne
-toastDiv = document.querySelector('.toastDiv')
-toastDiv.innerText = currentPlayer.name
+let toastDiv = document.querySelector('.toastDiv')
+toastDiv.innerText = `${currentPlayer.name}'s turn!`
 myBoardDiv = document.querySelector('.boardDiv') 
 let myBoard = new Board(myBoardDiv)
+let resetDiv = document.querySelector('.resetDiv')
+resetDiv.addEventListener('click',myBoard.resetBoard)
 myBoard.drawBoard(myBoardDiv)

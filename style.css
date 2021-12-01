@@ -2,8 +2,11 @@
     display:flex;
     flex-direction:row;
 }
+.resetButton{
+    border-radius: 1em;
+}
 .cell{
-    flex:0 1 30px;
+    flex:1 1 30px;
     display:flex;
     justify-content: center;
     align-items: center;

@@ -74,15 +74,12 @@ function Board(boardDiv){
             switch (myBoard.checkWins()){
                 case playerOne.marker:
                     toastDiv.innerText = `${playerOne.name} WINS!`
-                    toastDiv.addEventListener('click',myBoard.resetBoard)
                     break;
                 case playerTwo.marker:
                     toastDiv.innerText = `${playerTwo.name} WINS!`
-                    toastDiv.addEventListener('click',myBoard.resetBoard)
                     break;
                 case 'nobody':
-                    toastDiv.innerText = "Tie game! (click this to reset)"
-                    toastDiv.addEventListener('click',myBoard.resetBoard)
+                    toastDiv.innerText = "Tie game!"
                     break;
             } 
         }else {

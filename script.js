@@ -1,6 +1,7 @@
 function Board(boardDiv){
     let board = []
     let winner = ''
+    let turns = 0
     board.push(['_','_','_'])
     board.push(['_','_','_'])
     board.push(['_','_','_'])
@@ -9,12 +10,14 @@ function Board(boardDiv){
         console.log('Resetting Board')
         board = []
         winner = ''
+        turns= 0
         board.push(['_','_','_'])
         board.push(['_','_','_'])
         board.push(['_','_','_'])
         myBoard.drawBoard(boardDiv)
         currentPlayer = playerOne
         toastDiv.innerText = currentPlayer.name
+        toastDiv.removeEventListener('click',myBoard.resetBoard)
     }
     this.checkWins = function(){
         let threes = []
@@ -33,6 +36,16 @@ function Board(boardDiv){
             if (three === 'ooo')
                 winner = 'o'
         })
+        console.log(turns)
+        
+        if ((turns >=9)&&(winner === '')) {
+            winner = 'nobody'
+        }
+        console.log(winner)
+
+
+
+
         return winner
     }
     this.drawBoard = function(boardDiv){
@@ -54,6 +67,7 @@ function Board(boardDiv){
     }
     this.setCell = function(row,column,currentPlayer){
         if (winner ==''){
+            turns+=1
             if (board[row][column] == '_'){
                 board[row][column] = currentPlayer.marker
                 switchPlayer()
@@ -61,11 +75,15 @@ function Board(boardDiv){
             switch (myBoard.checkWins()){
                 case 'x':
                     toastDiv.innerText = "X WINS! (click this to reset)"
-                    toastDiv.addEventListener('click',this.resetBoard)
+                    toastDiv.addEventListener('click',myBoard.resetBoard)
                     break;
                 case 'o':
                     toastDiv.innerText = "O WINS! (click this to reset)"
-                    toastDiv.addEventListener('click',this.resetBoard)
+                    toastDiv.addEventListener('click',myBoard.resetBoard)
+                    break;
+                case 'nobody':
+                    toastDiv.innerText = "Tie game! (click this to reset)"
+                    toastDiv.addEventListener('click',myBoard.resetBoard)
                     break;
             } 
         }else {

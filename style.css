@@ -18,12 +18,13 @@
     border-top: 5px solid black;
     border-bottom:5px solid black;
 }
-.body {
+body {
     display:flex;
     flex-direction: column;
     align-items: center;
     justify-content:center;
 }
+
 .boardDiv{
     flex:1 0 100px;
 }

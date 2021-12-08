@@ -15,6 +15,7 @@ function Board(boardDiv){
         board.push(['_','_','_'])
         myBoard.drawBoard(boardDiv)
         currentPlayer = playerOne
+        toastDiv.innerText = `${currentPlayer.name}'s turn!`
         
     }
     this.computerMove = function(){
